@@ -1,6 +1,6 @@
 export default class TwitterService {
 
-    API_URL = 'http://localhost:4000/api';
+    API_URL = 'https://roi-task-node.herokuapp.com/api';
 
     searchTweetsByFilter(filter) {
 
