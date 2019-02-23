@@ -25,12 +25,10 @@ app.get('/api/tweets', function (req, res) {
     filterTweets(req.query)
         .then(resolve => {
 
-            console.log(`Starting request for search tweets...`);
             res.send(resolve);
         })
         .catch(reject => {
 
-            console.log(reject.status);
             console.log(errorMessage(reject));
             res.status(reject.status).send(errorMessage(reject));
         });

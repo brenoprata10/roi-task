@@ -27,13 +27,13 @@ class TwitterTable extends Component {
             return (null);
         }
 
-        if (this.props.sortTweetsState) {
+        let listTweets = this.props.listTweets;
 
-            this.handleSort(this.props.sortTweetsState.field, this.props.sortTweetsState.order);
-        }
+        listTweets = this.handleFilter(listTweets);
+        this.handleSort(listTweets);
 
         return (
-            this.props.listTweets.map(tweet => {
+            listTweets.map(tweet => {
                 return (
                     <tr key={tweet.id}>
                         <td>{tweet[this.CREATE_AT].toLocaleDateString()}</td>
@@ -45,9 +45,45 @@ class TwitterTable extends Component {
         );
     }
 
-    handleSort(field, order) {
+    handleFilter(listTweets) {
 
-        this.props.listTweets.sort((o1, o2) => {
+        if (this.props.filterTweetsState) {
+
+            return this.handleFieldFilter(listTweets, this.props.filterTweetsState.filter);
+        }
+
+        return listTweets;
+    }
+
+    handleFieldFilter(listTweets, filter) {
+
+        console.log(filter);
+
+        for (const filterFieldName of Object.keys(filter)) {
+
+            const filterField = filter[filterFieldName];
+
+            if (filter[filterFieldName].query) {
+
+                listTweets = listTweets
+                    .filter(tweets => filterField.operator.operation(tweets[filterField.field], filterField.query));
+            }
+        }
+
+        return listTweets;
+    }
+
+    handleSort(listTweets) {
+
+        if (this.props.sortTweetsState) {
+
+            this.handleFieldSort(listTweets, this.props.sortTweetsState.field, this.props.sortTweetsState.order);
+        }
+    }
+
+    handleFieldSort(listTweets, field, order) {
+
+        listTweets.sort((o1, o2) => {
             if (o1[field] > o2[field]) {
 
                 return this.isOrderAscending(order) ? 1 : -1
@@ -115,6 +151,7 @@ const mapStateToProps = store => ({
 
     listTweets: store.tweetsState.listTweets,
     sortTweetsState: store.sortTweetsState,
+    filterTweetsState: store.filterTweetsState
 });
 
 export default connect(mapStateToProps)(TwitterTable);

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import TwitterForm from "./TwitterForm";
 import TwitterTable from "./TwitterTable";
 import { connect } from 'react-redux';
-import {clearListTweets, updateListTweets} from '../../actions';
+import {clearListTweets, filterTweets, updateListTweets} from '../../actions';
 import TwitterService from "../../services/TwitterService";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
@@ -31,15 +31,12 @@ class TwitterBox extends Component {
 
         this.props.dispatch(clearListTweets());
 
+        this.insertFilters(filter);
+
         this.twitterService.searchTweetsByFilter(filter)
             .then(res => {
 
-                const listTweets = res.map(tweet => {
-                    return {
-                        ...tweet,
-                        created_at: new Date(tweet.created_at)
-                    }
-                });
+                const listTweets = this.prepareListTweets(res);
 
                 this.props.dispatch(updateListTweets(listTweets));
                 this.setState({twitterRequestErrorMessage: null});
@@ -47,6 +44,26 @@ class TwitterBox extends Component {
             .catch(error => {
                 this.setState({twitterRequestErrorMessage: error.message})
             })
+    }
+
+    insertFilters(filter) {
+
+        for (const field of Object.keys(filter.query)) {
+
+            const query = filter.query[field];
+
+            this.props.dispatch(filterTweets(field, query.field, query.operator, query.content));
+        }
+    }
+
+    prepareListTweets(listTweets) {
+
+        return listTweets.map(tweet => {
+            return {
+                ...tweet,
+                created_at: new Date(tweet.created_at)
+            }
+        });
     }
 
     clearErrorMessages() {

@@ -2,8 +2,6 @@ import {SORT_TWEETS} from "../actions/actionTypes";
 
 export const sortTweetsReducer = (state = {}, action) => {
 
-    console.log(action);
-
     switch (action.type) {
 
         case SORT_TWEETS:
