@@ -18,12 +18,12 @@ class TwitterForm extends Component {
             query: {
                 text: {
                     field: 'text',
-                    content: 'Head of Region',
+                    content: '',
                     operator: FilterTypes.INCLUDES
                 },
                 created_at: {
                     field: 'created_at',
-                    content: this.retrieveTodayDate(),
+                    content: '',
                     operator: FilterTypes.DATE_GREATER_THAN
                 },
                 length: {
@@ -35,6 +35,16 @@ class TwitterForm extends Component {
                     field: 'favorite_count',
                     content: '',
                     operator: FilterTypes.EQUALS
+                },
+                mentions_count: {
+                    field: 'text',
+                    content: '',
+                    operator: FilterTypes.EQUALS_NUMBER_MENTION
+                },
+                hashtag_count: {
+                    field: 'text',
+                    content: '',
+                    operator: FilterTypes.EQUALS_NUMBER_HASHTAG
                 }
             }
         };
@@ -100,7 +110,7 @@ class TwitterForm extends Component {
                             <Form.Group as={Col} md="4"
                                         controlId="formGridDate">
 
-                                <TwitterInputField label="Date:"
+                                <TwitterInputField label="Date Greater Than:"
                                                    icon="date_range"
                                                    value={this.state.query.created_at.content}
                                                    onChange={this.setQueryChange.bind(this, 'created_at')}
@@ -118,7 +128,7 @@ class TwitterForm extends Component {
                             </Form.Group>
 
                             <Form.Group as={Col} md="4"
-                                        controlId="formGridText">
+                                        controlId="formGridLength">
 
                                 <TwitterInputField label="Length:"
                                                    icon="dehaze"
@@ -130,10 +140,30 @@ class TwitterForm extends Component {
                             <Form.Group as={Col} md="4"
                                         controlId="formGridFavorite">
 
-                                <TwitterInputField label="Number Likes:"
+                                <TwitterInputField label="Number of Likes:"
                                                    icon="favorite"
                                                    value={this.state.query.favorite_count.content}
                                                    onChange={this.setQueryChange.bind(this, 'favorite_count')}
+                                                   type="number"/>
+                            </Form.Group>
+
+                            <Form.Group as={Col} md="4"
+                                        controlId="formGridNumberMentions">
+
+                                <TwitterInputField label="Number of Mentions:"
+                                                   icon="perm_identity"
+                                                   value={this.state.query.mentions_count.content}
+                                                   onChange={this.setQueryChange.bind(this, 'mentions_count')}
+                                                   type="number"/>
+                            </Form.Group>
+
+                            <Form.Group as={Col} md="4"
+                                        controlId="formGridNumberHashtag">
+
+                                <TwitterInputField label="Number of Hashtags:"
+                                                   icon="perm_identity"
+                                                   value={this.state.query.hashtag_count.content}
+                                                   onChange={this.setQueryChange.bind(this, 'hashtag_count')}
                                                    type="number"/>
                             </Form.Group>
                         </Form.Row>
