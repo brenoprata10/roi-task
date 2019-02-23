@@ -2,3 +2,15 @@
 
   padding: 3rem;
 }
+
+.sortable-field {
+
+  cursor: pointer;
+
+  &:hover {
+
+    color: white;
+    background-color: #4AB3F4;
+    transition: .4s;
+  }
+}

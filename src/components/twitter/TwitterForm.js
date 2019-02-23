@@ -2,26 +2,25 @@ import React, {Component} from 'react';
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { bindActionCreators } from 'redux';
-import { updateListTweets } from '../../actions';
 
 export default class TwitterForm extends Component {
 
     constructor() {
 
         super();
-        this.initializeState();
+        this.state = {
+            name: 'ROIHuntercom',
+            count: 50
+        };
     }
 
     searchFeed(event) {
 
         event.preventDefault();
+
+        this.props.callbackSearch(this.state);
     }
 
-    initializeState() {
-
-        this.state = {name: 'ROIHuntercom'};
-    }
 
     setChange(nameInput, event) {
 
@@ -34,7 +33,7 @@ export default class TwitterForm extends Component {
             <Card>
                 <Card.Header>Twitter Feed Search</Card.Header>
                 <Card.Body>
-                    <Form onSubmit={this.searchFeed}>
+                    <Form onSubmit={this.searchFeed.bind(this)}>
                         <Form.Row>
                             <Form.Group controlId="formGridName">
                                 <Form.Label>Name: *</Form.Label>
@@ -53,8 +52,3 @@ export default class TwitterForm extends Component {
         )
     }
 }
-
-const mapDispatchToProps = dispatch => {
-
-    bindActionCreators({ updateListTweets }, dispatch)
-};
