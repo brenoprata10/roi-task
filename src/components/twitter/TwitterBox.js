@@ -6,6 +6,7 @@ import {clearListTweets, filterTweets, updateListTweets} from '../../actions';
 import TwitterService from "../../services/TwitterService";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
+import TwitterStatistics from "./TwitterStatistics";
 
 class TwitterBox extends Component {
 
@@ -100,7 +101,12 @@ class TwitterBox extends Component {
         }
 
         return (
-            <TwitterTable/>
+            <div>
+                <br/>
+                <TwitterStatistics/>
+                <br/>
+                <TwitterTable/>
+            </div>
         );
     }
 
@@ -111,7 +117,6 @@ class TwitterBox extends Component {
                     this.handleErrorMessage()
                 }
                 <TwitterForm callbackSearch={this.filterTweets.bind(this)}/>
-                <br/>
                 {
                     this.handleTableRender()
                 }

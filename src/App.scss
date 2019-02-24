@@ -1,6 +1,6 @@
 .app-container {
 
-  padding: 3rem;
+  padding: 4%;
 }
 
 .sortable-field {
@@ -13,4 +13,9 @@
     background-color: #4AB3F4;
     transition: .4s;
   }
+}
+
+button {
+
+  display: flex !important;
 }

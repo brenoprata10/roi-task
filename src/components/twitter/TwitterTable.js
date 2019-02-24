@@ -57,8 +57,6 @@ class TwitterTable extends Component {
 
     handleFieldFilter(listTweets, filter) {
 
-        console.log(filter);
-
         for (const filterFieldName of Object.keys(filter)) {
 
             const filterField = filter[filterFieldName];

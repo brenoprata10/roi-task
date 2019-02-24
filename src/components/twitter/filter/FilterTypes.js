@@ -67,13 +67,13 @@ function handleOperationDateGreaterThan(firstObject, secondObject) {
 
 function handleOperationEqualsNumberMentions(text, mentionCountFilter) {
 
-    return handleRegexComparison(text, mentionCountFilter, new RegExp('@[a-z|A-Z]*:?', 'mg'));
+    return handleRegexComparison(text, mentionCountFilter, new RegExp('@[a-zA-Z_]*', 'mg'));
 }
 
 function handleOperationEqualsNumberHashtags(text, hashtagCountFilter) {
 
     console.log('teste');
-    return handleRegexComparison(text, hashtagCountFilter, new RegExp('#[a-z|A-Z]*:?', 'mg'));
+    return handleRegexComparison(text, hashtagCountFilter, new RegExp('#[a-zA-Z_]*', 'mg'));
 }
 
 function handleRegexComparison(firstString, secondString, regex) {

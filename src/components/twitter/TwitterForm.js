@@ -104,7 +104,7 @@ class TwitterForm extends Component {
                                                    value={this.state.name}
                                                    onChange={this.setChange.bind(this, 'name')}
                                                    type="text"
-                                                    required/>
+                                                   required/>
                             </Form.Group>
 
                             <Form.Group as={Col} md="4"
@@ -169,17 +169,22 @@ class TwitterForm extends Component {
                         </Form.Row>
 
                         <Button variant="primary"
-                                type="submit">Search</Button>
+                                type="submit">
+                            <i className="material-icons">
+                                search
+                            </i>
+                            Search
+                        </Button>
                     </Form>
                 </Card.Body>
             </Card>
-    )
+        )
     }
-    }
+}
 
-    const mapPropsToState = state => ({
+const mapPropsToState = state => ({
 
-        listTweets: state.tweetsState.listTweets
-    });
+    listTweets: state.tweetsState.listTweets
+});
 
-    export default connect(mapPropsToState)(TwitterForm)
+export default connect(mapPropsToState)(TwitterForm)
