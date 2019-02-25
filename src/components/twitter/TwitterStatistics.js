@@ -16,7 +16,7 @@ class TwitterStatistics extends Component {
 
     loadStatistics() {
 
-        if (!this.props.listTweets
+        if (!this.props.filterTweetsState.filteredList
             || !this.state.showModal) {
 
             return(null);
@@ -73,21 +73,31 @@ class TwitterStatistics extends Component {
 
     retrieveSumLikes() {
 
-        return this.props.listTweets
+        if (this.props.filterTweetsState.filteredList.length === 0) {
+
+            return 0;
+        }
+
+        return this.props.filterTweetsState.filteredList
             .map(tweet => tweet.favorite_count)
             .reduce((sumLikes, likeCount) => sumLikes + likeCount)
     }
 
     retrieveAverageLikesPerTweet() {
 
-        return this.retrieveSumLikes() / this.props.listTweets.length;
+        if (this.props.filterTweetsState.filteredList.length === 0) {
+
+            return 0;
+        }
+
+        return this.retrieveSumLikes() / this.props.filterTweetsState.filteredList.length;
     }
 
     retrieveAllMentionsByOccurence() {
 
         const regexMentions = new RegExp('@[a-zA-Z_]*', 'mg');
 
-        const listTweetsWithOccurences = this.props.listTweets
+        const listTweetsWithOccurences = this.props.filterTweetsState.filteredList
             .map(tweet => tweet.text)
             .filter(contentTweet => contentTweet.match(regexMentions));
 
@@ -166,9 +176,9 @@ class TwitterStatistics extends Component {
     }
 }
 
-const mapPropsToState = state => ({
+const mapStateToProps = state => ({
 
-    listTweets: state.tweetsState.listTweets
+    filterTweetsState: state.filterTweetsState
 });
 
-export default connect(mapPropsToState)(TwitterStatistics);
+export default connect(mapStateToProps)(TwitterStatistics);

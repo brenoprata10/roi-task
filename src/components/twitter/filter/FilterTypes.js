@@ -72,7 +72,6 @@ function handleOperationEqualsNumberMentions(text, mentionCountFilter) {
 
 function handleOperationEqualsNumberHashtags(text, hashtagCountFilter) {
 
-    console.log('teste');
     return handleRegexComparison(text, hashtagCountFilter, new RegExp('#[a-zA-Z_]*', 'mg'));
 }
 

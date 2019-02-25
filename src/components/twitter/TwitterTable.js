@@ -22,18 +22,15 @@ class TwitterTable extends Component {
 
     handleTableBody() {
 
-        if (!this.props.listTweets) {
+        if (!this.props.filterTweetsState.filteredList) {
 
             return (null);
         }
 
-        let listTweets = this.props.listTweets;
-
-        listTweets = this.handleFilter(listTweets);
-        this.handleSort(listTweets);
+        this.handleSort(this.props.filterTweetsState.filteredList);
 
         return (
-            listTweets.map(tweet => {
+            this.props.filterTweetsState.filteredList.map(tweet => {
                 return (
                     <tr key={tweet.id}>
                         <td>{tweet[this.CREATE_AT].toLocaleDateString()}</td>
@@ -43,32 +40,6 @@ class TwitterTable extends Component {
                 )
             })
         );
-    }
-
-    handleFilter(listTweets) {
-
-        if (this.props.filterTweetsState) {
-
-            return this.handleFieldFilter(listTweets, this.props.filterTweetsState.filter);
-        }
-
-        return listTweets;
-    }
-
-    handleFieldFilter(listTweets, filter) {
-
-        for (const filterFieldName of Object.keys(filter)) {
-
-            const filterField = filter[filterFieldName];
-
-            if (filter[filterFieldName].query) {
-
-                listTweets = listTweets
-                    .filter(tweets => filterField.operator.operation(tweets[filterField.field], filterField.query));
-            }
-        }
-
-        return listTweets;
     }
 
     handleSort(listTweets) {

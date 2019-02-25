@@ -1,4 +1,10 @@
-import {CLEAR_LIST_TWEETS, INSERT_TWEETS_FIELD_FILTER, SEARCH_LIST_TWEETS, SORT_TWEETS} from "./actionTypes";
+import {
+    CLEAR_LIST_TWEETS,
+    INSERT_TWEETS_FIELD_FILTER,
+    SEARCH_LIST_TWEETS,
+    SORT_TWEETS,
+    UPDATE_TWEETS_FILTERED_LIST
+} from "./actionTypes";
 
 export const updateListTweets = value => ({
     type: SEARCH_LIST_TWEETS,
@@ -21,4 +27,9 @@ export const filterTweets = (propertyName, field, operator, query) => ({
     query: query,
     operator: operator,
     propertyName: propertyName
+});
+
+export const updateTweetsFilteredList = (filteredList) => ({
+    type: UPDATE_TWEETS_FILTERED_LIST,
+    filteredList: filteredList
 });

@@ -50,20 +50,6 @@ class TwitterForm extends Component {
         };
     }
 
-    retrieveTodayDate() {
-
-        const todayDate = new Date();
-
-        return `${todayDate.getFullYear()}-${this.retrieveMonthString(todayDate)}-${todayDate.getDate()}`;
-    }
-
-    retrieveMonthString(todayDate) {
-
-        const actualMonth = todayDate.getMonth() + 1;
-
-        return actualMonth > 9 ? actualMonth : `0${actualMonth}`
-    }
-
     searchFeed(event) {
 
         event.preventDefault();

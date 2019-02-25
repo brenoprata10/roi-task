@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import TwitterForm from "./TwitterForm";
 import TwitterTable from "./TwitterTable";
 import { connect } from 'react-redux';
-import {clearListTweets, filterTweets, updateListTweets} from '../../actions';
+import {clearListTweets, filterTweets, updateListTweets, updateTweetsFilteredList} from '../../actions';
 import TwitterService from "../../services/TwitterService";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
@@ -40,11 +40,50 @@ class TwitterBox extends Component {
                 const listTweets = this.prepareListTweets(res);
 
                 this.props.dispatch(updateListTweets(listTweets));
+                this.props.dispatch(updateTweetsFilteredList(this.handleTableFilter()));
                 this.setState({twitterRequestErrorMessage: null});
             })
             .catch(error => {
                 this.setState({twitterRequestErrorMessage: error.message})
             })
+    }
+
+    handleTableFilter() {
+
+        if (!this.props.listTweets) {
+
+            return (null);
+        }
+
+        let listTweets = this.props.listTweets;
+
+        return this.handleFilter(listTweets);
+    }
+
+    handleFilter(listTweets) {
+
+        if (this.props.filterTweetsState) {
+
+            return this.handleFieldFilter(listTweets, this.props.filterTweetsState.filter);
+        }
+
+        return listTweets;
+    }
+
+    handleFieldFilter(listTweets, filter) {
+
+        for (const filterFieldName of Object.keys(filter)) {
+
+            const filterField = filter[filterFieldName];
+
+            if (filter[filterFieldName].query) {
+
+                listTweets = listTweets
+                    .filter(tweets => filterField.operator.operation(tweets[filterField.field], filterField.query));
+            }
+        }
+
+        return listTweets;
     }
 
     insertFilters(filter) {
@@ -127,7 +166,8 @@ class TwitterBox extends Component {
 
 const mapStateToProps = store => ({
 
-    listTweets: store.tweetsState.listTweets
+    listTweets: store.tweetsState.listTweets,
+    filterTweetsState: store.filterTweetsState
 });
 
 export default connect(mapStateToProps)(TwitterBox);

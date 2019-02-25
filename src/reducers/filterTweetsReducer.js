@@ -1,7 +1,8 @@
-import {INSERT_TWEETS_FIELD_FILTER} from "../actions/actionTypes";
+import {INSERT_TWEETS_FIELD_FILTER, UPDATE_TWEETS_FILTERED_LIST} from "../actions/actionTypes";
 
 const defaultState = {
-    filter: {}
+    filter: {},
+    filteredList: []
 };
 
 export const filterTweetsReducer = (state = defaultState, action) => {
@@ -20,6 +21,11 @@ export const filterTweetsReducer = (state = defaultState, action) => {
                         operator: action.operator
                     }
                 }
+            };
+        case UPDATE_TWEETS_FILTERED_LIST:
+            return {
+                ...state,
+                filteredList: action.filteredList
             };
         default:
             return state;
